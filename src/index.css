@@ -1,0 +1,367 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------- */
+/* Apple Alabaster Light                                             */
+/* 90/10 rule: neutral surfaces + one indigo accent + rose for "live" */
+/* ---------------------------------------------------------------- */
+:root {
+  --bg: #f5f6f9;
+  --panel: #ffffff;
+  --panel-solid: #ffffff;
+  --sunken: #f8fafc;
+  --chip: #f1f5f9;
+  --line: rgb(226 232 240 / 0.75);
+  --line-subtle: rgb(226 232 240 / 0.6);
+  --line-strong: #cbd5e1;
+  --fg: #0f172a;
+  --fg-2: #475569;
+  --fg-3: #94a3b8;
+  --hover: rgb(15 23 42 / 0.045);
+  --contrast: #0f172a;
+  --contrast-fg: #ffffff;
+  --contrast-hover: #1e293b;
+  --shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 8px 24px -4px rgba(15, 23, 42, 0.04);
+  --shadow-pop: 0 24px 60px -12px rgb(15 23 42 / 0.18), 0 0 0 1px rgb(15 23 42 / 0.05);
+  --glow-a: rgb(99 102 241 / 0.045);
+  --glow-b: rgb(148 163 184 / 0.06);
+  --glow-c: transparent;
+  --scrim: rgb(15 23 42 / 0.32);
+  color-scheme: light;
+}
+
+/* ---------------------------------------------------------------- */
+/* True Obsidian-Zinc Dark (default) — neutral graphite, no violet  */
+/* ---------------------------------------------------------------- */
+.dark {
+  --bg: #090a0d;
+  --panel: #111318;
+  --panel-solid: #111318;
+  --sunken: #161922;
+  --chip: rgb(39 39 42 / 0.9);
+  --line: rgb(255 255 255 / 0.07);
+  --line-subtle: rgb(255 255 255 / 0.05);
+  --line-strong: rgb(255 255 255 / 0.13);
+  --fg: #f4f4f5;
+  --fg-2: #a1a1aa;
+  --fg-3: #71717a;
+  --hover: rgb(255 255 255 / 0.045);
+  --contrast: #ffffff;
+  --contrast-fg: #18181b;
+  --contrast-hover: #e4e4e7;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-pop: 0 28px 70px -12px rgba(0, 0, 0, 0.75), 0 0 0 1px rgb(255 255 255 / 0.08);
+  --glow-a: rgb(255 255 255 / 0.028);
+  --glow-b: rgb(99 102 241 / 0.035);
+  --glow-c: transparent;
+  --scrim: rgb(0 0 0 / 0.62);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-panel-solid: var(--panel-solid);
+  --color-sunken: var(--sunken);
+  --color-chip: var(--chip);
+  --color-contrast: var(--contrast);
+  --color-contrast-fg: var(--contrast-fg);
+  --color-contrast-hover: var(--contrast-hover);
+  --color-line-subtle: var(--line-subtle);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-fg-3: var(--fg-3);
+  --color-hover: var(--hover);
+  --shadow-panel: var(--shadow);
+  --shadow-pop: var(--shadow-pop);
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-jp: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', 'MS Mincho', serif;
+}
+
+@theme {
+  /* Ultra-wide / 4K breakpoint (Tailwind ships up to 2xl = 1536px) */
+  --breakpoint-3xl: 120rem; /* 1920px */
+
+  /* Motion tokens — every animation below touches only opacity + transform */
+  --ease-fluid: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.36, 0.64, 1);
+
+  --animate-fade-in: fade-in 0.22s var(--ease-fluid) backwards;
+  --animate-page-in: page-in 0.28s var(--ease-fluid) backwards;
+  --animate-pop-in: pop-in 0.2s var(--ease-fluid) backwards;
+  --animate-slide-up: slide-up 0.34s var(--ease-fluid) backwards;
+  --animate-modal-in: modal-in 0.44s var(--ease-spring) backwards;
+  --animate-modal-out: modal-out 0.16s var(--ease-fluid) forwards;
+  --animate-scrim-in: fade-in 0.2s linear backwards;
+  --animate-scrim-out: fade-out 0.16s linear forwards;
+  --animate-toast-out: toast-out 0.2s var(--ease-fluid) forwards;
+  --animate-karma-pop: karma-pop 0.36s var(--ease-spring);
+  --animate-odometer-up: odometer-up 0.32s var(--ease-fluid) backwards;
+  --animate-odometer-down: odometer-down 0.32s var(--ease-fluid) backwards;
+  --animate-shimmer: shimmer 2.4s linear infinite;
+  --animate-accent-in: accent-in 0.34s var(--ease-spring) backwards;
+  --animate-underline-in: underline-in 0.26s var(--ease-fluid) backwards;
+  --animate-grow-x: grow-x 0.8s var(--ease-fluid) backwards;
+  --animate-fill-in: fill-in 0.9s var(--ease-fluid) backwards;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+  @keyframes page-in {
+    from { opacity: 0; transform: translate3d(0, 8px, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+  @keyframes pop-in {
+    from { opacity: 0; transform: translate3d(0, -4px, 0) scale(0.97); }
+    to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  }
+  @keyframes slide-up {
+    from { opacity: 0; transform: translate3d(0, 10px, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+  @keyframes modal-in {
+    from { opacity: 0; transform: translate3d(0, 10px, 0) scale(0.95); }
+    to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  }
+  @keyframes modal-out {
+    from { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+    to { opacity: 0; transform: translate3d(0, 6px, 0) scale(0.97); }
+  }
+  @keyframes toast-out {
+    from { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+    to { opacity: 0; transform: translate3d(16px, 0, 0) scale(0.98); }
+  }
+  @keyframes karma-pop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+  @keyframes odometer-up {
+    from { opacity: 0; transform: translate3d(0, 70%, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+  @keyframes odometer-down {
+    from { opacity: 0; transform: translate3d(0, -70%, 0); }
+    to { opacity: 1; transform: translate3d(0, 0, 0); }
+  }
+  @keyframes shimmer {
+    from { transform: translate3d(-100%, 0, 0); }
+    to { transform: translate3d(100%, 0, 0); }
+  }
+  @keyframes accent-in {
+    from { opacity: 0; transform: scaleY(0); }
+    to { opacity: 1; transform: scaleY(1); }
+  }
+  /* No 'to' frame: animates into the element's own inline transform */
+  @keyframes grow-x {
+    from { transform: scaleX(0); }
+  }
+  @keyframes fill-in {
+    from { transform: translate3d(-100%, 0, 0); }
+  }
+  @keyframes underline-in {
+    from { opacity: 0; transform: scaleX(0); }
+    to { opacity: 1; transform: scaleX(1); }
+  }
+}
+
+/* True spring curve where the browser supports linear() easing */
+@supports (transition-timing-function: linear(0, 1)) {
+  :root {
+    --ease-spring: linear(0, 0.006, 0.025 2.8%, 0.101 6.1%, 0.539 18.9%, 0.721 25.3%, 0.849 31.5%, 0.937 38.1%, 0.968 41.8%, 0.991 45.7%, 1.006 50.1%, 1.015 55%, 1.017 63.9%, 1.001);
+  }
+}
+
+/* Hover feedback for surfaces: GPU lift + paint-only colour change (never layout properties) */
+@utility transition-card {
+  transition-property: transform, translate, scale, opacity, border-color, background-color, color;
+  transition-timing-function: var(--tw-ease, var(--ease-fluid));
+  transition-duration: var(--tw-duration, 200ms);
+}
+
+/* GPU-only transition: never width/height/margin/padding/box-shadow */
+@utility transition-gpu {
+  transition-property: transform, translate, scale, rotate, opacity;
+  transition-timing-function: var(--tw-ease, var(--ease-fluid));
+  transition-duration: var(--tw-duration, 200ms);
+}
+
+@layer base {
+  html {
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss01', 'ss03';
+    min-height: 100vh;
+  }
+  ::selection {
+    background: rgb(99 102 241 / 0.28);
+  }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  :focus-visible {
+    outline: 2px solid rgb(99 102 241 / 0.7);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+  }
+}
+
+@layer components {
+  /* Cards: translucent panel without backdrop-filter — re-blurring dozens of
+     cards on every scroll frame is what makes 4K screens and weak GPUs stutter. */
+  .glass {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  /* Floating chrome (sticky bars, menus, modals) keeps the real frosted glass. */
+  .glass-float {
+    background: var(--panel);
+    backdrop-filter: blur(40px) saturate(1.5);
+    -webkit-backdrop-filter: blur(40px) saturate(1.5);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  .glass-hover:hover {
+    border-color: var(--line-strong);
+  }
+  .popover {
+    background: var(--panel-solid);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-pop);
+  }
+  .dark .popover {
+    background: rgb(21 23 29 / 0.94);
+    backdrop-filter: blur(32px) saturate(1.4);
+    -webkit-backdrop-filter: blur(32px) saturate(1.4);
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .kbd {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10.5px;
+    line-height: 1;
+    padding: 3px 6px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    color: var(--fg-3);
+  }
+  .noise {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .spoiler-inline {
+    border-radius: 4px;
+    padding: 0 3px;
+    background: var(--fg-3);
+    cursor: pointer;
+  }
+  .spoiler-inline > .spoiler-text {
+    opacity: 0;
+    transition: opacity 0.28s var(--ease-fluid);
+  }
+  .spoiler-inline.open {
+    background: var(--chip);
+    cursor: text;
+  }
+  .spoiler-inline.open > .spoiler-text {
+    opacity: 1;
+  }
+  .meme-text {
+    font-family: Impact, 'Anton', 'Arial Black', sans-serif;
+    text-transform: uppercase;
+    color: #fff;
+    -webkit-text-stroke: 1.5px #000;
+    paint-order: stroke fill;
+    letter-spacing: 0.02em;
+    text-shadow: 0 2px 0 #000, 0 0 12px rgb(0 0 0 / 0.6);
+  }
+}
+
+/* Range input — thin indigo track (spoiler gate, review sliders) */
+.otaku-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 20px;
+  background: transparent;
+  cursor: pointer;
+}
+.otaku-range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--fill-from, #6366f1), var(--fill-to, #6366f1)) 0 / var(--fill, 50%) 100% no-repeat, var(--chip);
+}
+.otaku-range::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--chip);
+}
+.otaku-range::-moz-range-progress {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--fill-from, #6366f1);
+}
+.otaku-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  border-radius: 999px;
+  background: #fff;
+  border: 0;
+  box-shadow: 0 0 0 1px rgb(15 23 42 / 0.12), 0 2px 6px rgb(0 0 0 / 0.25);
+  transition: transform 0.15s ease;
+}
+.otaku-range:active::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+.otaku-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: #fff;
+  border: 0;
+  box-shadow: 0 0 0 1px rgb(15 23 42 / 0.12), 0 2px 6px rgb(0 0 0 / 0.25);
+}
+
+/* Theme switch: View Transitions crossfade (compositor snapshot, opacity only) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.32s;
+  animation-timing-function: var(--ease-fluid);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
